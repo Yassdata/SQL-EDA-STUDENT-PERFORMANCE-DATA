@@ -1,0 +1,56 @@
+SELECT * FROM `Student performance`.studentperformancefactors;
+SELECT Gender,Exam_Score, Hours_Studied, Parental_Education_Level, School_Type,Tutoring_Sessions
+FROM `Student performance`.studentperformancefactors;
+# Identify Missing Values
+SELECT 
+    COUNT(*) AS Total_Records,
+    SUM(CASE WHEN Gender IS NULL THEN 1 ELSE 0 END) AS Missing_Gender,
+    SUM(CASE WHEN Exam_Score IS NULL THEN 1 ELSE 0 END) AS Missing_Exam_Score,
+    SUM(CASE WHEN Hours_Studied IS NULL THEN 1 ELSE 0 END) AS Missing_Hours_Studied,
+    SUM(CASE WHEN Parental_Education_Level IS NULL THEN 1 ELSE 0 END) AS Missing_Parental_Education_Level,
+    SUM(CASE WHEN School_Type IS NULL THEN 1 ELSE 0 END) AS Missing_School_Type,
+    SUM(CASE WHEN Tutoring_Sessions IS NULL THEN 1 ELSE 0 END) AS Missing_Tutoring_Sessions
+FROM `Student performance`.studentperformancefactors;
+   
+# Summary Statistics (Min, Max, Avg)
+SELECT 
+    MIN(Exam_Score) AS Min_Score, MAX(Exam_Score) AS Max_Score, AVG(Exam_Score) AS Avg_Score,
+    MIN(Hours_Studied) AS Min_Hours, MAX(Hours_Studied) AS Max_Hours, AVG(Hours_Studied) AS Avg_Hours,
+    MIN(Tutoring_Sessions) AS Min_Tutoring, MAX(Tutoring_Sessions) AS Max_Tutoring, AVG(Tutoring_Sessions) AS Avg_Tutoring
+FROM `Student performance`.studentperformancefactors;
+# count the number of students by gender to have an idea of how many male and female student
+SELECT Gender, COUNT(*) AS Gender_Count
+FROM `Student performance`.studentperformancefactors
+GROUP BY Gender;
+
+# Average Exam Score by Gender
+SELECT Gender, AVG(Exam_Score) AS Avg_Score
+FROM `Student performance`.studentperformancefactors
+GROUP BY Gender;
+
+# Average Study Hours by Parental Education Level
+SELECT Parental_Education_Level, AVG(Hours_Studied) AS Avg_Hours
+FROM `Student performance`.studentperformancefactors
+GROUP BY Parental_Education_Level;
+
+# Average Exam Score by School Type
+SELECT School_Type, AVG(Exam_Score) AS Avg_Score_school_exam
+FROM `Student performance`.studentperformancefactors
+GROUP BY School_Type;
+
+# Distribution of Tutoring Sessions
+SELECT Tutoring_Sessions, COUNT(*) AS Session_Count_dist
+FROM `Student performance`.studentperformancefactors
+GROUP BY Tutoring_Sessions;
+
+# Relationship Between Study Hours and Exam Score
+SELECT Hours_Studied, AVG(Exam_Score) AS Avg_Score
+FROM `Student performance`.studentperformancefactors
+GROUP BY Hours_Studied
+ORDER BY Hours_Studied;
+
+# Impact of Tutoring on Exam Score
+SELECT Tutoring_Sessions, AVG(Exam_Score) AS Avg_Score
+FROM `Student performance`.studentperformancefactors
+GROUP BY Tutoring_Sessions
+ORDER BY Tutoring_Sessions;
